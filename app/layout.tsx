@@ -106,7 +106,6 @@ export const metadata: Metadata = {
     ],
   },
   manifest: '/site.webmanifest',
-  themeColor: '#0A1628',
   verification: {
     google: 'google-site-verification-code', // Replace with your verification code
   },

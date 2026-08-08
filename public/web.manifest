@@ -1,0 +1,16 @@
+{
+  "name": "Pinnamount Escapes",
+  "short_name": "Pinnamount",
+  "description": "The World's Finest Resorts & Retreats",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#0A1628",
+  "background_color": "#0A1628",
+  "display": "standalone",
+  "start_url": "/"
+}

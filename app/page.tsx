@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Logo from '@/components/ui/Logo'
 import { createClient } from '@/lib/supabase/server'
 
 export default async function HomePage() {
@@ -6,90 +7,43 @@ export default async function HomePage() {
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-    <main style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0A1628 0%, #1a2a45 50%, #0A1628 100%)',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '24px',
-      textAlign: 'center',
-    }}>
+    <main className="min-h-screen bg-gradient-navy flex flex-col items-center justify-center p-6 text-center">
       {/* Logo */}
-      <div style={{ marginBottom: '32px' }}>
-        <div style={{
-          width: '60px',
-          height: '60px',
-          background: 'linear-gradient(135deg, #C9A84C, #E8C96A)',
-          borderRadius: '12px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          margin: '0 auto 16px',
-          fontSize: '28px',
-        }}>
-          ▲
-        </div>
-        <h1 style={{
-          fontFamily: 'Playfair Display, serif',
-          fontSize: '36px',
-          fontWeight: '700',
-          color: 'white',
-          lineHeight: 1.2,
-        }}>
-          Pinnamount<br />
-          <span style={{ color: '#C9A84C' }}>Escapes</span>
-        </h1>
-        <p style={{
-          color: 'rgba(255,255,255,0.5)',
-          fontSize: '12px',
-          marginTop: '6px',
-          letterSpacing: '1px',
-          textTransform: 'uppercase',
-        }}>
+      <div className="mb-8">
+        <Logo variant="full" className="justify-center" />
+        <p className="text-white/40 text-xs mt-2 font-inter tracking-wider uppercase">
           A Pinnamount Legacy Universal Property
         </p>
       </div>
 
       {/* Tagline */}
-      <p style={{
-        color: 'rgba(255,255,255,0.7)',
-        fontSize: '18px',
-        maxWidth: '400px',
-        lineHeight: 1.6,
-        marginBottom: '40px',
-      }}>
+      <p className="text-white/70 text-lg max-w-md leading-relaxed mb-10 font-inter">
         The World's Finest Resorts & Retreats, One Platform.
       </p>
 
       {/* Buttons */}
       {user ? (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', maxWidth: '320px' }}>
-          <Link href="/dashboard" style={{ textDecoration: 'none' }}>
-            <button className="btn-gold">Go to Dashboard</button>
+        <div className="flex flex-col gap-3 w-full max-w-xs">
+          <Link href="/dashboard" className="w-full">
+            <button className="btn-gold w-full">Go to Dashboard</button>
           </Link>
-          <Link href="/profile" style={{ textDecoration: 'none' }}>
-            <button className="btn-outline">My Profile</button>
+          <Link href="/profile" className="w-full">
+            <button className="btn-outline w-full">My Profile</button>
           </Link>
         </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', maxWidth: '320px' }}>
-          <Link href="/auth/signup" style={{ textDecoration: 'none' }}>
-            <button className="btn-gold">Create Account</button>
+        <div className="flex flex-col gap-3 w-full max-w-xs">
+          <Link href="/auth/signup" className="w-full">
+            <button className="btn-gold w-full">Create Account</button>
           </Link>
-          <Link href="/auth/signin" style={{ textDecoration: 'none' }}>
-            <button className="btn-outline">Sign In</button>
+          <Link href="/auth/signin" className="w-full">
+            <button className="btn-outline w-full">Sign In</button>
           </Link>
         </div>
       )}
 
       {/* Footer */}
-      <p style={{
-        color: 'rgba(255,255,255,0.3)',
-        fontSize: '12px',
-        marginTop: '60px',
-      }}>
+      <p className="text-white/20 text-xs mt-16 font-inter">
         © {new Date().getFullYear()} Pinnamount Escapes — A Pinnamount Legacy Universal Property
       </p>
     </main>

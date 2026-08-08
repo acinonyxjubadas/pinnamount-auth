@@ -47,7 +47,7 @@ function getZodErrorMessage(error: unknown): string {
 }
 
 // ============================================
-// SIGN UP
+// SIGN UP - FIXED: Auto-sign-in after sign-up
 // ============================================
 
 export async function signUp(formData: FormData) {
@@ -68,7 +68,7 @@ export async function signUp(formData: FormData) {
     )
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -83,11 +83,34 @@ export async function signUp(formData: FormData) {
   })
 
   if (error) {
+    console.error('Signup error:', error)
     return redirect(
       `/auth/signup?error=${encodeURIComponent(error.message)}`
     )
   }
 
+  // ✅ FIX: If user is created, sign them in automatically
+  if (data?.user) {
+    console.log('✅ User created successfully:', data.user.email)
+    
+    // ✅ Try to sign in the user immediately
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (signInError) {
+      console.error('Auto sign-in error:', signInError)
+      // If auto-login fails, redirect to sign-in page with success message
+      return redirect('/auth/signin?success=Account created! Please sign in.')
+    }
+
+    revalidatePath('/', 'layout')
+    return redirect('/dashboard')
+  }
+
+  // ✅ Fallback: If no user, redirect to verify-email
+  // (This only happens if email confirmation is enabled)
   return redirect('/auth/verify-email')
 }
 
